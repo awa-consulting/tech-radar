@@ -22,13 +22,15 @@
 <svg id="radar"></svg>
 
 <script>
-fetch('./config.json').then(function(response) {
-  return response.json();
+const headers = { 'Authorization': 'Bearer 19488194334e8c58c9222fba1e7cea22beac1fffa730e11a4be1bcaaa5addf372651fd7cc98a19ae19f27b6f5651c269a24df129486cb5d88cc98f38d91dc155a4cb1ddbec5dbca9def8602093881786dc6ad9e5eb26f41d46e061a85b31786c0f2f273750e80ac372448d08acfa9d76e71963df4272dad18c301d4622c974ef' }; 
+fetch('http://localhost:1337/api/tech-radar', { headers }).then(function(response) {
+  return  response.json();
+  
 }).then(function(data) {
   radar_visualization({
     repo_url: "https://awa-consulting.de",
     title: "AWA Consulting Tech Radar",
-    date: data.date,
+    date: data.data.techRadar.date,
     quadrants: [
       { name: "Languages & Frameworks" },
       { name: "Platforms" },
@@ -41,7 +43,7 @@ fetch('./config.json').then(function(response) {
       { name: "ASSESS", color: "#c7ba00" },
       { name: "HOLD", color: "#e09b96" }
     ],
-    entries: data.entries
+    entries: data.data.techRadar.entries
   });
 }).catch(function(err) {
   console.log('Error loading config.json', err);
